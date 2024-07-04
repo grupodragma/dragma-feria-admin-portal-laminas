@@ -1,0 +1,12 @@
+<?php
+    $data = ['empresa'=> $this->empresa,'feria'=>$this->feria,'cliente'=>$this->cliente,'idpaginasstand'=>$this->idpaginasstand,'configuracion'=>$this->configuracion,'listaEmpresas'=> $this->listaEmpresas,'banco'=> $this->banco];
+    switch( $this->plantillaSeleccionado ) {
+        case 'vip': echo $this->partial('partial/paginas/plantilla-stand-vip', $data); break;
+        case 'circular': echo $this->partial('partial/paginas/plantilla-stand-circular', $data); break;
+        case 'standar': echo $this->partial('partial/paginas/plantilla-stand-standar', $data); break;
+        case 'big': echo $this->partial('partial/paginas/plantilla-stand-big', $data); break;
+        case 'big-scotiabank': echo $this->partial('partial/paginas/plantilla-stand-big-scotiabank', $data); break;
+        case 'circular-portal': echo $this->partial('partial/paginas/plantilla-stand-circular-portal', $data); break;
+        default: echo 'No se encontro una plantilla.'; break;
+    }
+?>

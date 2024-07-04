@@ -1,0 +1,284 @@
+<style>
+    .contenedor-imagen-personalizado{
+        background: #eaeaea;
+    }
+    .label-info {
+        background-color: #5bc0de;
+    }
+    .label {
+        display: inline;
+        padding: .2em .6em .3em;
+        font-size: 75%;
+        font-weight: 700;
+        line-height: 1;
+        color: #fff;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        border-radius: .25em;
+    }
+    .bootstrap-tagsinput{
+        width: 100%;
+        display: block;
+    }
+</style>
+
+<div class="modal-header">
+    <h4 class="modal-title">Editar Bancos</h4>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true"><i class="fas fa-times"></i></span>
+    </button>
+</div>
+
+<form id="validar_formulario" data-accion="/mantenimiento/guardar-editar-bancos?idbancos=<?php echo $this->idbancos; ?>" data-callback="respuesta(response, 'Bancos actualizado correctamente.')" autocomplete="off">
+    <div class="modal-body">
+        <div class="contenedor-tabs">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#tab_default-1" role="tab"><i class="fas fa-fw fa-lg fa-info"></i> Información</a></li>
+                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_default-2" role="tab"><i class="fas fa-fw fa-lg fa-user"></i> Asesor</a></li>
+            </ul>
+            <div class="tab-content tab-validate">
+                <div class="tab-pane fade show active" id="tab_default-1" role="tabpanel">
+                    <div class="panel-hdr">
+                        <h2><i class="fas fa-fw fa-lg fa-images"></i>&nbsp;Logo</h2>
+                    </div>
+                    <div class="form-group">
+                        <div class="contenedor-imagen-personalizado">
+                            <img src="<?php echo ( $this->hash_logo != '' ) ? 'bancos/logo/'.$this->hash_logo.'?t='.time() : 'img/no-imagen.jpg'; ?>" width="300" class="imagen">
+                            <div class="panel-tag panel-tag--alert-danger mb-5 mt-5">Imagen recomendada de 300 px de ancho y 91 px de alto</div>
+                            <button type="button" class="btn btn-dark btn-block cambiar-imagen-personalizado"><i class="fas fa-upload"></i> Cambiar Imagen</button>
+                            <input type="file" data-width="300" data-height="91" onchange="cambiarImagenDimension(this, event);" class="hidden" name="logo" accept=".jpg,.jpeg,.png" style="display: none;">
+                            <div class="hidden mensaje">La imagen que intenta subir, no cumple con las dimensiones recomendadas. Intente otra vez.</div>
+                        </div>
+                    </div>
+                    <div class="panel-hdr">
+                        <h2><i class="fas fa-fw fa-lg fa-images"></i>&nbsp;Logo Pequeño</h2>
+                    </div>
+                    <div class="form-group">
+                        <div class="contenedor-imagen-personalizado">
+                            <img src="<?php echo ( $this->hash_logo_small != '' ) ? 'bancos/logo/'.$this->hash_logo_small.'?t='.time() : 'img/no-imagen.jpg'; ?>" width="72" class="imagen">
+                            <div class="panel-tag panel-tag--alert-danger mb-5 mt-5">Imagen recomendada de 72 px de ancho y 22 px de alto</div>
+                            <button type="button" class="btn btn-dark btn-block cambiar-imagen-personalizado"><i class="fas fa-upload"></i> Cambiar Imagen</button>
+                            <input type="file" data-width="72" data-height="22" onchange="cambiarImagenDimension(this, event);" class="hidden" name="logo_small" accept=".jpg,.jpeg,.png" style="display: none;">
+                            <div class="hidden mensaje">La imagen que intenta subir, no cumple con las dimensiones recomendadas. Intente otra vez.</div>
+                        </div>
+                    </div>
+                    <div class="panel-hdr">
+                        <h2><i class="fas fa-fw fa-lg fa-images"></i>&nbsp;Fondo Encabezado</h2>
+                    </div>
+                    <div class="form-group">
+                        <div class="contenedor-imagen-personalizado">
+                            <img src="<?php echo ( $this->hash_encabezado_fondo != '' ) ? 'bancos/encabezado/'.$this->hash_encabezado_fondo.'?t='.time() : 'img/no-imagen.jpg'; ?>" width="300" class="imagen" alt="">
+                            <div class="panel-tag panel-tag--alert-danger mb-5 mt-5">Imagen recomendada de 1784 px de ancho y 290 px de alto</div>
+                            <button type="button" class="btn btn-dark btn-block cambiar-imagen-personalizado"><i class="fas fa-upload"></i> Cambiar Imagen</button>
+                            <input type="file" data-width="1784" data-height="290" onchange="cambiarImagenDimension(this, event);" class="hidden" name="hash_encabezado_fondo" accept=".jpg,.jpeg,.png" style="display: none;">
+                            <div class="hidden mensaje">La imagen que intenta subir, no cumple con las dimensiones recomendadas. Intente otra vez.</div>
+                        </div>
+                    </div>
+                    <div class="panel-hdr">
+                        <h2><i class="fas fa-fw fa-lg fa-clock"></i>&nbsp;Crédito Hipotecario</h2>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Cuota Inicial %</label>
+                        <span>
+                            <select class="tagsselect" name="cuota_inicial_porcentaje[]" multiple data-role="tagsinput">
+                                <?php if(!empty($this->cuota_inicial_porcentaje)) : foreach($this->cuota_inicial_porcentaje as $value) : ?>
+                                <option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+                                <?php endforeach; endif; ?>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Plazo de Crédito Hipotecario (Años)</label>
+                        <span>
+                            <select class="tagsselect" name="plazo_credito_hipotecario[]" multiple data-role="tagsinput">
+                                <?php if(!empty($this->plazo_credito_hipotecario)) : foreach($this->plazo_credito_hipotecario as $value) : ?>
+                                <option value="<?php echo $value; ?>"><?php echo $value; ?></option>
+                                <?php endforeach; endif; ?>
+                            </select>
+                        </span>
+                    </div>
+                    <!-- <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="form-label">Tipo de Cuota</label>
+                                <span>
+                                    <select class="select2 form-control select-stand" name="tipo_cuota">
+                                        <option value="" selected="select">Seleccionar...</option>
+                                        <option value="SIMPLE" <?php if($this->tipo_cuota == 'SIMPLE' ) echo "selected='select'"; ?>>SIMPLE</option>
+                                        <option value="DOBLE" <?php if($this->tipo_cuota == 'DOBLE' ) echo "selected='select'"; ?>>DOBLE</option>
+                                    </select>
+                                </span>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Cuota %</label>
+                                <span>
+                                    <input type="text" name="tipo_cuota_porcentaje" class="form-control" value="<?php echo $this->tipo_cuota_porcentaje; ?>">
+                                </span>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+                <div class="tab-pane fade" id="tab_default-2" role="tabpanel">
+                    <div class="form-group">
+                        <label class="form-label">Nombre</label>
+                        <span>
+                            <input type="text" name="nombre" class="form-control" value="<?php echo $this->nombre; ?>">
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Correo Electrónico</label>
+                        <span>
+                            <input type="text" name="correo" class="form-control" value="<?php echo $this->correo; ?>">
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Teléfono</label>
+                        <span>
+                            <input type="text" name="telefono" class="form-control" value="<?php echo $this->telefono; ?>">
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Enlace Whatsapp</label>
+                        <span>
+                            <input type="text" name="enlace_wsp" class="form-control" value="<?php echo $this->enlace_wsp; ?>">
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Enlace</label>
+                        <span>
+                            <input type="text" name="enlace" class="form-control" value="<?php echo $this->enlace; ?>">
+                        </span>
+                    </div>
+                    <div class="panel-hdr">
+                        <h2><i class="fas fa-fw fa-lg fa-images"></i>&nbsp;Logo</h2>
+                    </div>
+                    <div class="form-group">   
+                        <div class="contenedor-imagen-personalizado">
+                            <img src="<?php echo ( $this->hash_logo_asesor != '' ) ? 'bancos/asesor/logo/'.$this->hash_logo_asesor.'?t='.time() : 'img/no-imagen.jpg'; ?>" width="200" class="imagen" alt="">
+                            <div class="panel-tag panel-tag--alert-danger mb-5 mt-5">Imagen recomendada de 251 px de ancho y 249 px de alto</div>
+                            <button type="button" class="btn btn-dark btn-block cambiar-imagen-personalizado"><i class="fas fa-upload"></i> Cambiar Imagen</button>
+                            <input type="file" data-width="251" data-height="249" onchange="cambiarImagenDimension(this, event);" class="hidden" name="hash_logo_asesor" accept=".jpg,.jpeg,.png" style="display: none;">
+                            <div class="hidden mensaje">La imagen que intenta subir, no cumple con las dimensiones recomendadas. Intente otra vez.</div>
+                        </div>
+                    </div>
+                    <div class="panel-hdr">
+                        <h2><i class="fas fa-fw fa-lg fa-clock"></i>&nbsp;Horario de Atención</h2>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <?php list($inicio, $fin) = @explode("-", (isset($this->horario_atencion[0]) && $this->horario_atencion[0] != '') ? $this->horario_atencion[0] : '00:00-00:00'); ?>
+                            <div class="col-md-6">
+                                <label class="form-label">Hora Inicio</label>
+                                <span>
+                                    <input type="text" name="hora_inicio[]" data-inputmask="'mask': '99:99'" class="form-control" value="<?php echo $inicio; ?>">
+                                </span>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Hora Fin</label>
+                                <span>
+                                    <input type="text" name="hora_fin[]" data-inputmask="'mask': '99:99'" class="form-control" value="<?php echo $fin; ?>">
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <?php list($inicio, $fin) = explode("-", (isset($this->horario_atencion[1]) && $this->horario_atencion[1] != '') ? $this->horario_atencion[1] : '00:00-00:00'); ?>
+                            <div class="col-md-6">
+                                <label class="form-label">Hora Inicio</label>
+                                <span>
+                                    <input type="text" name="hora_inicio[]" data-inputmask="'mask': '99:99'" class="form-control"  value="<?php echo $inicio; ?>">
+                                </span>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Hora Fin</label>
+                                <span>
+                                    <input type="text" name="hora_fin[]" data-inputmask="'mask': '99:99'" class="form-control"  value="<?php echo $fin; ?>">
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-info btn-submit btn-uploader-form" data-id-form='validar_formulario'>Guardar Cambios</button>
+    </div>
+</form>
+
+<script>
+
+    $(".tagsselect").tagsinput('items');
+    $(".select2").select2();
+
+    $(document).ready(function(){
+        $(":input").inputmask();
+    });
+
+    $(".cambiar-imagen-personalizado").click(function () {
+        $(this).parent().find("input[type='file']").click();
+    });
+
+    var _URL = window.URL || window.webkitURL;
+
+    function cambiarImagenDimension(obj, event){
+        var contenedor = $(obj).parent();
+        var reader = new FileReader();
+        var img = contenedor.find("img");
+        var img_width = parseInt($(obj).attr("data-width"));
+        var img_height = parseInt($(obj).attr("data-height"));
+        var mensaje = contenedor.find(".mensaje").text();
+        reader.readAsDataURL(event.target.files[0]);
+        reader.onload = function (e) {
+            var image = new Image();
+            image.src = e.target.result;
+            image.onload = function () {
+                var width = this.width;
+                var height = this.height;
+                if (width != img_width || height != img_height) {
+                    alert(mensaje);
+                    $(obj).val('');
+                    img.attr("src", "img/no-imagen.jpg");
+                    return false;
+                } 
+                img.attr("src", e.target.result);
+            };
+        }
+    }
+
+    $("#validar_formulario").validate({
+        ignore: [],
+        invalidHandler: function() {
+            setTimeout(function() {
+                $('.nav-tabs a small.required').remove();
+                var validatePane = $('.tab-content.tab-validate .tab-pane:has(input.error)').each(function() {
+                    var id = $(this).attr('id');
+                    $('.nav-tabs').find('a[href^="#' + id + '"]').append(' <small class="required">***</small>');
+                });
+            });            
+        },
+        rules: {
+            nombre: {
+                required: true
+            },
+            correo: {
+                required: true,
+                email: true
+            }
+        },
+        messages: {
+            nombre: {
+                required: 'Por favor, ingrese el nombre'
+            },
+            correo: {
+                required: 'Por favor, ingrese el correo electrónico',
+                email: 'Por favor, ingrese una dirección de correo electrónico válida'
+            }
+        },
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+        }
+    });
+
+</script>

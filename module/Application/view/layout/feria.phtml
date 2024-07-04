@@ -1,0 +1,360 @@
+<?= $this->doctype() ?>
+
+<?= $this->content; ?>
+
+<!-- <div class="modal fade" id="modal-uno" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content"></div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-dos" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content"></div>
+    </div>
+</div> -->
+
+<script>
+
+    $(document).on("ready", function () {
+        $(".regular").slick({
+            dots: false,
+            infinite: true,
+            arrows: true,
+            prevArrow: '<button type="button" class="slick-prev"></button>',
+            nextArrow: '<button type="button" class="slick-next"></button>',
+            centerMode: false,
+            slidesToShow: 4,
+            slidesToScroll: 2,
+            autoplay: true,
+            autoplaySpeed: 4000,
+            pauseOnHover: true,
+            responsive: [
+                {
+                    breakpoint: 1024,
+                    settings: {
+                        slidesToShow: 3,
+                        slidesToScroll: 2,
+                    },
+                },
+                {
+                    breakpoint: 600,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 2,
+                        centerMode: false,
+                    },
+                },
+                {
+                    breakpoint: 480,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 2,
+                    },
+                },
+            ],
+        });
+    });
+
+    $("body").on("click",".pop-up",function(e){
+        e.preventDefault();
+        abrirModal($(this).attr("href"),'uno');
+    });
+
+    $("body").delegate(".pop-up-2","click",function(e){
+        e.preventDefault();
+        abrirModal($(this).attr("href"),'dos');
+    });
+
+    function abrirModal(src,id){
+        $('#modal-'+id).modal({
+            backdrop: 'static',
+            keyboard: true
+        });
+        $('#modal-'+id).find('.modal-content').html('<div class="text-center" style="padding:30px;text-align: center;"><i class="fas fa-spinner fa-pulse fa-5x"></i> <br/><br/> <p>Cargando Contenido</p></div>');
+        $.post(src,function(data){
+            $('#modal-'+id).find('.modal-content').html(data);
+        }).fail(function(e){
+            var msj = '';
+            var icon = 'fas fa-warning fa-5x txt-color-red';
+            switch(e.status){
+                case 0:
+                    msj = 'No se ha podido conectar con el servidor, intente en otro momento.';
+                    icon = "fas fa-globe fa-5x txt-color-red";
+                break;
+                case 404:
+                    msj = 'El contenido que usted esta buscando no se ha encontrado en el servidor.';
+                break;
+                case 401:
+                    msj = 'Usted no tiene acceso a esta opción.';
+                    icon = "fas fa-ban fa-5x txt-color-red";
+                break;
+                case 500:
+                    msj = 'Se ha encontrado un error en el servidor, contácte con su administrador del sistema.';
+                    icon = "fas fa-plug fa-5x txt-color-red";
+                break;
+                default:
+                    msj = 'No se ha podido conectar con el servidor, intente en otro momento.';
+                    icon = "fas fa-globe fa-5x txt-color-red";
+                break;
+            }
+            $('#modal-'+id).find('.modal-content').html('<div class="text-center" style="padding:30px;text-align: center;"><i class="'+icon+'"></i> <br/><br/> <p>'+msj+'</p><br/> <div class="btn btn-default" data-dismiss="modal">Cerrar</div></div>'); 	
+        });
+    }
+
+    function ocultarModal(instance){
+        if(!instance)instance = 'uno';
+        $('#modal-'+instance).modal('hide');
+        $('#modal-'+instance).find('.modal-content').html('');
+    }
+
+    toastr.options = {
+        "timeOut": 10000
+    }
+
+    function alerta(mensaje, clase){
+        switch(clase){
+            case "success": toastr["success"](mensaje); break;
+            case "error": toastr["error"](mensaje); break;
+            case "warning": toastr["warning"](mensaje); break;
+            default: toastr["warning"](mensaje); break;
+        }
+    }
+</script>
+
+<script>
+    jQuery(document).ready(function () {
+        var offset = 220;
+        var duration = 500;
+        jQuery(window).scroll(function () {
+            if (jQuery(this).scrollTop() > offset) {
+                jQuery(".back-to-top").fadeIn(duration);
+            } else {
+                jQuery(".back-to-top").fadeOut(duration);
+            }
+        });
+
+        jQuery(".back-to-top").click(function (event) {
+            event.preventDefault();
+            jQuery("html, body").animate({ scrollTop: 0 }, duration);
+            return false;
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $(".vid-slider .vid").on("click", function () {
+            // get required DOM Elements
+            var iframe_src = $(this).children("iframe").attr("src"),
+                iframe = $(".video-popup"),
+                iframe_video = $(".video-popup iframe"),
+                close_btn = $(".close-video");
+            iframe_src = iframe_src + "?autoplay=1&rel=0"; // for autoplaying the popup video
+
+            // change the video source with the clicked one
+            $(iframe_video).attr("src", iframe_src);
+            $(iframe).fadeIn().addClass("show-video");
+
+            // remove the video overlay when clicking outside the video
+            $(document).on("click", function (e) {
+                if ($(iframe).is(e.target) || $(close_btn).is(e.target)) {
+                    $(iframe).removeClass("show-video");
+                    $(iframe_video).attr("src", "");
+                }
+            });
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $(".slectOne").on("change", function () {
+            $(".slectOne").not(this).prop("checked", false);
+            $("#result").html($(this).data("id"));
+            if ($(this).is(":checked")) $("#result").html($(this).data("id"));
+            else $("#result").html("Empty...!");
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("#txtbusca").keyup(function () {
+            var parametros = "txtbusca=" + $(this).val();
+            $.ajax({
+                data: parametros,
+                url: "salida_1.php",
+                type: "post",
+                beforeSend: function () {},
+                success: function (response) {
+                    $(".salida").html(response);
+                },
+                error: function () {
+                    alert("error");
+                },
+            });
+        });
+    });
+</script>
+
+<script>
+    /*!
+        * Based on articles on
+        * https://gomakethings.com
+        */
+
+    var drawer = function () {
+        /**
+         * Element.closest() polyfill
+         * https://developer.mozilla.org/en-US/docs/Web/API/Element/closest#Polyfill
+         */
+        if (!Element.prototype.closest) {
+            if (!Element.prototype.matches) {
+                Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
+            }
+            Element.prototype.closest = function (s) {
+                var el = this;
+                var ancestor = this;
+                if (!document.documentElement.contains(el)) return null;
+                do {
+                    if (ancestor.matches(s)) return ancestor;
+                    ancestor = ancestor.parentElement;
+                } while (ancestor !== null);
+                return null;
+            };
+        }
+
+        //
+        // Settings
+        //
+        var settings = {
+            speedOpen: 50,
+            speedClose: 350,
+            activeClass: "is-active",
+            visibleClass: "is-visible",
+            selectorTarget: "[data-drawer-target]",
+            selectorTrigger: "[data-drawer-trigger]",
+            selectorClose: "[data-drawer-close]",
+        };
+
+        //
+        // Methods
+        //
+
+        // Toggle accessibility
+        var toggleAccessibility = function (event) {
+            if (event.getAttribute("aria-expanded") === "true") {
+                event.setAttribute("aria-expanded", false);
+            } else {
+                event.setAttribute("aria-expanded", true);
+            }
+        };
+
+        // Open Drawer
+        var openDrawer = function (trigger) {
+            // Find target
+            var target = document.getElementById(trigger.getAttribute("aria-controls"));
+
+            // Make it active
+            target.classList.add(settings.activeClass);
+
+            // Make body overflow hidden so it's not scrollable
+            document.documentElement.style.overflow = "hidden";
+
+            // Toggle accessibility
+            toggleAccessibility(trigger);
+
+            // Make it visible
+            setTimeout(function () {
+                target.classList.add(settings.visibleClass);
+            }, settings.speedOpen);
+        };
+
+        // Close Drawer
+        var closeDrawer = function (event) {
+            // Find target
+            var closestParent = event.closest(settings.selectorTarget),
+                childrenTrigger = document.querySelector('[aria-controls="' + closestParent.id + '"');
+
+            // Make it not visible
+            closestParent.classList.remove(settings.visibleClass);
+
+            // Remove body overflow hidden
+            document.documentElement.style.overflow = "";
+
+            // Toggle accessibility
+            toggleAccessibility(childrenTrigger);
+
+            // Make it not active
+            setTimeout(function () {
+                closestParent.classList.remove(settings.activeClass);
+            }, settings.speedClose);
+        };
+
+        // Click Handler
+        var clickHandler = function (event) {
+            // Find elements
+            var toggle = event.target,
+                open = toggle.closest(settings.selectorTrigger),
+                close = toggle.closest(settings.selectorClose);
+
+            // Open drawer when the open button is clicked
+            if (open) {
+                openDrawer(open);
+            }
+
+            // Close drawer when the close button (or overlay area) is clicked
+            if (close) {
+                closeDrawer(close);
+            }
+
+            // Prevent default link behavior
+            if (open || close) {
+                event.preventDefault();
+            }
+        };
+
+        // Keydown Handler, handle Escape button
+        var keydownHandler = function (event) {
+            if (event.key === "Escape" || event.keyCode === 27) {
+                // Find all possible drawers
+                var drawers = document.querySelectorAll(settings.selectorTarget),
+                    i;
+
+                // Find active drawers and close them when escape is clicked
+                for (i = 0; i < drawers.length; ++i) {
+                    if (drawers[i].classList.contains(settings.activeClass)) {
+                        closeDrawer(drawers[i]);
+                    }
+                }
+            }
+        };
+
+        //
+        // Inits & Event Listeners
+        //
+        document.addEventListener("click", clickHandler, false);
+        document.addEventListener("keydown", keydownHandler, false);
+    };
+
+    drawer();
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("#ingresar").popup({
+            transition: "all 0.3s",
+            closebutton: true,
+        });
+    });
+</script>
+
+<script>
+    function smooth() {
+        if ($("#show").is(":visible")) {
+            $("#show").hide("1000");
+        } else {
+            $("#show").show("1000");
+        }
+    }
+</script>

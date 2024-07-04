@@ -1,0 +1,35 @@
+<style>
+    .select2{
+        width: 180px!important;
+    }
+    .select2-dropdown{
+        z-index: 100000;
+    }
+    .select2-search--dropdown:before {
+        font-family: "Font Awesome 5 Free"; font-weight: 900; content: "\f002";
+    }
+</style>
+
+<div class="opciones-vista">
+    <a class="btn btn-info" onclick="regresar();"><i class="fas fa-arrow-left"></i> Regresar</a>
+    <select class="select2 select-zonas-paginas">
+        <option value="" disabled="">Seleccionar...</option>
+        <?php foreach($this->listaZonas as $item): ?>
+        <option value="<?php echo $item['idzonas'] ?>" <?php if( $this->zona['idzonas'] == $item['idzonas'] ) echo "selected='select'"; ?>><?php echo $item['nombre'] ?></option>
+        <?php endforeach; ?>
+    </select>
+    <button type="button" class="btn btn-success btn-cambiar-fondo" data-toggle="tooltip" data-placement="top" title="La dimensión recomendada es de 2000 px de ancho y 1109 px de alto"><i class="fas fa-images"></i> <span>Cambiar Fondo</span></button>
+    <button type="button" onclick="abrirVista('/cliente/paginas-banner-opciones', 'dos', 'banner')" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Opción para asociar el banner con el stand"><i class="fas fa-cog"></i> <span>Asociar Banner</span></button>
+    <button type="button" class="btn btn-dark btn-guardar-cambios"><i class="fas fa-save"></i> <span>Guardar Cambios</span></button>
+</div>
+
+<script>
+    $(".select2").select2();
+    $(".select-zonas-paginas").change(function(){
+        let idzonas = $(this).val();
+        window.location.href = 'cliente/paginas-zonas-configuracion/'+idzonas;
+    });
+    function regresar(){
+        window.location.href = "cliente/zonas";
+    }
+</script>

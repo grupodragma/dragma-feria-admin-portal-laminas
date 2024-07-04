@@ -1,0 +1,50 @@
+<style>
+    
+</style>
+
+<div class="modal-header">
+    <h4 class="modal-title">Agregar Rango Precios</h4>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true"><i class="fas fa-times"></i></span>
+    </button>
+</div>
+
+<form id="validar_formulario" data-accion="/mantenimiento/guardar-agregar-rango-precios" data-callback="respuesta(response, 'Rango Precios agregado correctamente.')" autocomplete="off">
+    <div class="modal-body">
+        <div class="form-group">
+            <label class="form-label">Precio Mínimo</label>
+            <span>
+                <input type="number" name="precio_min" class="form-control">
+            </span>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Precio Máximo</label>
+            <span>
+                <input type="number" name="precio_max" class="form-control">
+            </span>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-info btn-submit btn-uploader-form" data-id-form='validar_formulario'>Agregar Rango Precios</button>
+    </div>
+</form>
+
+<script>
+
+    $("#validar_formulario").validate({
+        rules: {
+            precio_min: {
+                required: true
+            },
+            precio_max: {
+                required: true
+            }
+        },
+        messages: {},
+        errorPlacement: function (error, element) {
+            error.insertAfter(element.parent());
+        }
+    });
+
+</script>

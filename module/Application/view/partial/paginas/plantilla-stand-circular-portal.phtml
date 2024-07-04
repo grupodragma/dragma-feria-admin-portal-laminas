@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="theme-color" content="#00b3ce" />
+        <meta http-equiv="Content-Language" content="es" />
+        <meta name="description" content="LA ÚNICA FERIA DEL SECTOR INMOBILIARIO EN EL PERÚ, y es organizada por la Centro Virtual de Convenciones." />
+        <meta name="Keywords" content="Ferias virtuales, recorridos, convenciones" />
+        <title>FERIA VIRTUAL INMOBILIRIA - LA ÚNICA FERIA VIRTUAL DEL SECTOR INMOBILIARIO EN EL PERÚ.</title>
+        <base href="<?php echo $this->layout()->base_url; ?>" />
+        <link href="https://centrovirtualdeconvenciones.com/expohogar.png" rel="shortcut icon" title="feria-2020" />
+        <meta name="viewport" content="width=480" initial-scale="1" />
+        <link rel="alternate" hreflang="es" href="https://dragmastands.com/" />
+        <link rel="stylesheet" media="screen, print" href="css/formplugins/select2/select2.bundle.css">
+        <link rel="stylesheet" media="screen, print" href="css/notifications/toastr/toastr.css">
+        <link href="plantillas/css/style.css" rel="stylesheet" type="text/css" />
+        <link href="plantillas/css/slick.css" rel="stylesheet" type="text/css" />
+        <link href="plantillas/css/slick-theme.css" rel="stylesheet" type="text/css" />
+        <link href="plantillas/css/css2.css" rel="stylesheet" />
+        <link href="plantillas/css/icon.css" rel="stylesheet" />
+        <link href="plantillas/css/grt-responsive-menu.css" rel="stylesheet" type="text/css" />
+        <link href="plantillas/css/base.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="plantillas/js/jquery.min.js"></script>
+        <script type="text/javascript" defer src="plantillas/js/all.js"></script>
+        <script type="text/javascript" src="plantillas/js/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" src="plantillas/js/slick.min.js"></script>
+        <script type="text/javascript" src="plantillas/js/jquery.popupoverlay.js"></script>
+        <script type="text/javascript" src="plantillas/js/grt-responsive-menu.js"></script>
+        <script src="js/formplugins/select2/select2.bundle.js"></script>
+        <script src="plantillas/js/bootstrap-tooltip.js"></script>
+        <script src="js/notifications/toastr/toastr.js"></script>
+        <style>
+            @media screen and (max-width: 580px) {
+            	.info-modulo{
+            		display:none;
+            	}
+            }
+        </style>
+    </head>
+
+    <body style="overflow-y: scroll;">
+        <div class="boton-atajos">
+            <a href="#" class="back-to-top"><img src="plantillas/imagenes/message-top.png" alt=""></a>
+            <a href="#" class="back-to-top"><img src="plantillas/imagenes/arrow-top.png" alt=""></a>
+        </div>
+
+        <div class="imagen-fondo-movil" data-width="572" data-height="720" data-accept=".jpg,.jpeg,.png" data-imagen-movil="<?php if ( isset($this->configuracion['imagen_fondo_movil'])) { echo 'paginas/stand-circular-portal/'.$this->configuracion['imagen_fondo_movil']['hash']; }; ?>"></div>
+
+        <div class="home-fondo-stands">
+            <div class="caja" data-aos="fade-in">
+                <div>
+                    <div class="back-standi">
+                        <div class="back">
+                            <div class="logos-top-stand">
+                                <div class="der imagen" data-id="imagen_logo_1" data-width="183" data-height="74" data-accept=".jpg,.jpeg,.png">
+                                    <img src="<?php echo ( isset($this->configuracion['imagen_logo_1'])) ? 'paginas/stand-circular-portal/'.$this->configuracion['imagen_logo_1']['hash'] : 'img/plantillas/stand-circular-portal/imagen_logo_1.svg'; ?>" class="img" data-toggle="tooltip" data-placement="bottom" title="La dimensión recomendada es de 183 px de ancho y 74 px de alto" alt="">
+                                </div>
+                                <div class="space-stand"></div>
+                                <div class="right imagen" data-id="imagen_logo_2" data-width="300" data-height="58" data-accept=".jpg,.jpeg,.png">
+                                    <img src="<?php echo ( isset($this->configuracion['imagen_logo_2'])) ? 'paginas/stand-circular-portal/'.$this->configuracion['imagen_logo_2']['hash'] : 'img/plantillas/stand-circular-portal/imagen_logo_2.svg'; ?>" class="img" data-toggle="tooltip" data-placement="bottom" title="La dimensión recomendada es de 300 px de ancho y 58 px de alto" alt="">
+                                </div>
+                            </div>
+                            <div class="arte-stand-portal imagen" data-id="imagen_banner_1" data-width="600" data-height="449" data-accept=".jpg,.jpeg,.png">
+                                <img src="<?php echo ( isset($this->configuracion['imagen_banner_1'])) ? 'paginas/stand-circular-portal/'.$this->configuracion['imagen_banner_1']['hash'] : 'img/plantillas/stand-circular-portal/imagen_banner_1.jpg'; ?>" class="img" data-toggle="tooltip" data-placement="bottom" title="La dimensión recomendada es de 600 px de ancho y 449 px de alto" alt="">
+                            </div>
+                            <div class="stand-portal">
+                                <img src="plantillas/imagenes/stand-portal.png" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+
+    <?php echo $this->partial('partial/paginas/opciones-stand', ['empresa'=> $this->empresa,'feria'=>$this->feria,'cliente'=>$this->cliente,'idpaginasstand'=>$this->idpaginasstand,'configuracion'=>$this->configuracion,'listaEmpresas'=> $this->listaEmpresas]); ?>
+
+    <form id="form_pagina">
+        <input type="hidden" name="plantilla" value="stand-circular-portal" />
+        <input type="hidden" name="idempresas" value="<?php echo $this->empresa['idempresas']; ?>" />
+        <input type="hidden" name="idpaginasstand" value="<?php echo $this->idpaginasstand; ?>" />
+        <input type="file" id="imagen_logo_1" name="imagen_logo_1" style="display: none;" onchange="subirArchivo(this.files, this)" accept=".jpg,.jpeg,.png" />
+        <input type="file" id="imagen_logo_2" name="imagen_logo_2" style="display: none;" onchange="subirArchivo(this.files, this)" accept=".jpg,.jpeg,.png" />
+        <input type="file" id="imagen_banner_1" name="imagen_banner_1" style="display: none;" onchange="subirArchivo(this.files, this)" accept=".jpg,.jpeg,.png" />
+        <input type="file" id="imagen_fondo" name="imagen_fondo" style="display: none;" onchange="subirFondo(this.files, this, 'imagen-fondo')" accept=".jpg,.jpeg,.png" />
+        <input type="file" id="imagen_fondo_movil" name="imagen_fondo_movil" onchange="subirFondo(this.files, this, 'imagen-fondo-movil')" style="display: none;" accept=".jpg,.jpeg,.png" />
+    </form>
+    <script>
+        $("[data-text='tv_texto_1']").keyup(function(){
+            $("#tv_texto_1").val($(this).val());
+        });
+        $("a").click(function (e) {
+            e.preventDefault();
+        });
+
+        $(".img.img, .btn-cambiar-fondo").tooltip();
+
+        $(".imagen").click(function () {
+            let idinputfile = $(this).attr("data-id");
+            $("#" + idinputfile).click();
+        });
+
+        $(".btn-cambiar-fondo").click(function () {
+            $("#imagen_fondo").click();
+        });
+
+        $(".btn-cambiar-fondo-movil").click(function () {
+            $("#imagen_fondo_movil").click();
+        });
+
+        var _URL = window.URL || window.webkitURL;
+
+        function subirArchivo(files, obj) {
+          let reader = new FileReader();
+          let idinputfile = $(obj).attr("id");
+          let contenedor = $("[data-id='" + idinputfile + "']");
+          let imgContenedor = contenedor.find(".img");
+          let file = files[0];
+          let img_width = parseInt(contenedor.attr("data-width"));
+          let img_height = parseInt(contenedor.attr("data-height"));
+          let accept = contenedor.attr("data-accept");
+          reader.readAsDataURL(file);
+          reader.onload = function (e) {
+              var image = new Image();
+              image.src = e.target.result;
+              image.onload = function () {
+                  var width = this.width;
+                  var height = this.height;
+                  if (width != img_width || height != img_height) {
+                      alerta("La imagen no cumple con las dimensiones recomendadas.", "danger");
+                      $(obj).val("");
+                      imgContenedor.attr("src", "img/no-imagen.jpg");
+                      return false;
+                  }
+                  contenedor.find("img.img").attr("src", e.target.result);
+              };
+          };
+        }
+
+        function subirFondo(files, obj, clase) {
+          let contenedor = $("."+clase);
+          let reader = new FileReader();
+          let file = files[0];
+          let img_width = parseInt(contenedor.attr("data-width"));
+          let img_height = parseInt(contenedor.attr("data-height"));
+          let accept = contenedor.attr("data-accept");
+          reader.readAsDataURL(file);
+          reader.onload = function (e) {
+              var image = new Image();
+              image.src = e.target.result;
+              image.onload = function () {
+                  var width = this.width;
+                  var height = this.height;
+                  if (width != img_width || height != img_height) {
+                      alerta("La imagen no cumple las dimensiones recomendadas. Por favor, intentelo otra vez.", "warning");
+                      $(obj).val("");
+                      contenedor.css({ "background-image": "url(img/no-imagen.jpg)" });
+                      return false;
+                  }
+                  console.log(e.target.result);
+                  contenedor.css({ "background-image": "url(" + e.target.result + ")" });
+              };
+          };
+        }
+
+        $(".btn-guardar-cambios").click(function () {
+            let _this = $(this);
+            let form = $("form#form_pagina");
+            var data = new FormData(form[0]);
+            _this.attr("disabled", "");
+            _this.find("i").hide();
+            $.ajax({
+                url: "cliente/guardar-parametros-stand",
+                type: "POST",
+                data: data,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    //console.log( response );
+                    if (response.result == "success") {
+                        form.find("input[name='idpaginasstand']").val(response.idpaginasstand);
+                        _this.find("i").show();
+                        _this.find("span").text("Guardar Cambios");
+                        alerta("Los datos se guardaron correctamente.", "success");
+                    }
+                    _this.removeAttr("disabled", "");
+                },
+                xhr: function () {
+                    var xhr = new window.XMLHttpRequest();
+                    xhr.upload.addEventListener(
+                        "progress",
+                        function (evt) {
+                            if (evt.lengthComputable) {
+                                var percentComplete = Math.round((evt.loaded / evt.total) * 100) + "%";
+                                //console.log( percentComplete );
+                                _this.find("span").text(percentComplete + " Guardando Cambios...");
+                            }
+                        },
+                        false
+                    );
+                    return xhr;
+                },
+                error: function () {
+                    alerta("Se han detectado errores de red intente en otro momento.", "danger");
+                    _this.removeAttr("disabled", "");
+                },
+            });
+        });
+        
+    </script>
+
+</html>
