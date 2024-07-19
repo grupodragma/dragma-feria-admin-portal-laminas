@@ -1592,10 +1592,10 @@ class ClienteController extends AbstractActionController {
         $dataFeria = $this->objFeriasTable->obtenerDatoFerias(['idferias'=> $dataZonas['idferias']]);
         $dataCliente = $this->objClientesTable->obtenerDatoClientes(['idclientes'=> $dataFeria['idclientes']]);
         $dataPaginasStand = $this->objPaginasStandTable->obtenerDatoPaginasStand(['idempresas'=> $idempresas]);
-        $dataConfiguracion = ( $dataPaginasStand['configuracion'] != '') ? json_decode($dataPaginasStand['configuracion'], true) : [];
+        $dataConfiguracion = !empty($dataPaginasStand['configuracion']) ? json_decode($dataPaginasStand['configuracion'], true) : [];
         $dataBanco = $this->objBancosTable->obtenerDatoBancos(['idbancos'=> $dataEmpresas['idbancos']]);
         $data = [
-            'idpaginasstand'=> $dataPaginasStand['idpaginasstand'],
+            'idpaginasstand'=> $dataPaginasStand['idpaginasstand'] ?? null,
             'configuracion'=> $dataConfiguracion,
             'feria'=> $dataFeria,
             'cliente'=> $dataCliente,

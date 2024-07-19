@@ -44,9 +44,9 @@
             <a href="#" class="back-to-top"><img src="plantillas/imagenes/arrow-top.png" alt=""></a>
         </div>
 
-        <div class="imagen-fondo-movil" data-width="572" data-height="720" data-accept=".jpg,.jpeg,.png" data-imagen-movil="<?php if ( isset($this->configuracion['imagen_fondo_movil'])) { echo 'paginas/stand-circular-portal/'.$this->configuracion['imagen_fondo_movil']['hash']; }; ?>"></div>
+        <div class="imagen-fondo-movil" data-width="572" data-height="720" data-accept=".jpg,.jpeg,.png"></div>
 
-        <div class="home-fondo-stands">
+        <div class="home-fondo-stands" data-width="572" data-height="720" style="<?php echo (isset($this->configuracion['imagen_fondo_movil'])) ? 'background-image: url(paginas/stand-circular-portal/'.$this->configuracion['imagen_fondo_movil']['hash'].')' : 'background-image: url(plantillas/imagenes/back.stand-portal.jpg)' ?>">
             <div class="caja" data-aos="fade-in">
                 <div>
                     <div class="back-standi">
@@ -83,7 +83,7 @@
         <input type="file" id="imagen_logo_2" name="imagen_logo_2" style="display: none;" onchange="subirArchivo(this.files, this)" accept=".jpg,.jpeg,.png" />
         <input type="file" id="imagen_banner_1" name="imagen_banner_1" style="display: none;" onchange="subirArchivo(this.files, this)" accept=".jpg,.jpeg,.png" />
         <input type="file" id="imagen_fondo" name="imagen_fondo" style="display: none;" onchange="subirFondo(this.files, this, 'imagen-fondo')" accept=".jpg,.jpeg,.png" />
-        <input type="file" id="imagen_fondo_movil" name="imagen_fondo_movil" onchange="subirFondo(this.files, this, 'imagen-fondo-movil')" style="display: none;" accept=".jpg,.jpeg,.png" />
+        <input type="file" id="imagen_fondo_movil" name="imagen_fondo_movil" onchange="subirFondo(this.files, this, 'home-fondo-stands')" style="display: none;" accept=".jpg,.jpeg,.png" />
     </form>
     <script>
         $("[data-text='tv_texto_1']").keyup(function(){
@@ -93,7 +93,7 @@
             e.preventDefault();
         });
 
-        $(".img.img, .btn-cambiar-fondo").tooltip();
+        $(".img.img, .btn-cambiar-fondo, .btn-cambiar-fondo-movil").tooltip();
 
         $(".imagen").click(function () {
             let idinputfile = $(this).attr("data-id");
@@ -107,6 +107,8 @@
         $(".btn-cambiar-fondo-movil").click(function () {
             $("#imagen_fondo_movil").click();
         });
+
+        $(".btn-cambiar-fondo").hide();
 
         var _URL = window.URL || window.webkitURL;
 
