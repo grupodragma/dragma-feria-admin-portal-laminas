@@ -1287,7 +1287,7 @@ class ClienteController extends AbstractActionController {
             'titulo_boton_envivo'=> @$datosFormulario['titulo_boton_envivo'],
             'config_estado_boton_envivo'=> $estadoBotonEnVivo,
             'stand_config_estado_rv'=> $standEstadoRv,
-            'idsegmentos'=> @$datosFormulario['idsegmentos'],
+            'idsegmentos'=> !empty(@$datosFormulario['idsegmentos']) ? $datosFormulario['idsegmentos'] : 0,
             'resumen'=> @$datosFormulario['resumen'],
             'descripcion'=> @$datosFormulario['descripcion'],
         ];
@@ -1353,7 +1353,7 @@ class ClienteController extends AbstractActionController {
             'titulo_boton_envivo'=> @$datosFormulario['titulo_boton_envivo'],
             'config_estado_boton_envivo'=> $estadoBotonEnVivo,
             'stand_config_estado_rv'=> $standEstadoRv,
-            'idsegmentos'=> @$datosFormulario['idsegmentos'],
+            'idsegmentos'=> !empty(@$datosFormulario['idsegmentos']) ? $datosFormulario['idsegmentos'] : 0,
             'resumen'=> @$datosFormulario['resumen'],
             'descripcion'=> @$datosFormulario['descripcion'],
         ];

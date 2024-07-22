@@ -69,7 +69,7 @@ class PlanoController extends AbstractActionController {
             'tipo_enlace'=>@$datosFormulario['tipo_enlace'],
             'idtipohabitacion'=>(int)$datosFormulario['idtipohabitacion'],
             'idnumerohabitacion'=>(int)$datosFormulario['idnumerohabitacion'],
-            'moneda'=>$datosFormulario['moneda'],
+            'moneda'=>!empty($datosFormulario['moneda']) ? $datosFormulario['moneda'] : null,
             'precio_desde'=>(int)$datosFormulario['precio_desde'],
             'precio_hasta'=>(int)$datosFormulario['precio_hasta'],
         ];
