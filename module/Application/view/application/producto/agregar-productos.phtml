@@ -1,4 +1,10 @@
 <style>
+    .address-container {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 8px;
+    }
     .contenedor-tabs .tab-content{
         margin-top: 8px;
     }
@@ -112,13 +118,14 @@
         <!-- Parámetros Mapa -->
         <input type="hidden" name="latitud" id="latitud" readonly="" value="0">
 		<input type="hidden" name="longitud" id="longitud" readonly="" value="0">
+        <input type="hidden" name="ubicacion" id="ubicacion" readonly="" value="">
         <!-- TABS [INICIO] -->
         <div class="contenedor-tabs">
             <ul class="nav nav-tabs" role="tablist">
                 <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#tab_default-1" role="tab"><i class="fas fa-fw fa-lg fa-info"></i> Detalle</a></li>
                 <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_default-2" role="tab"><i class="fas fa-fw fa-lg fa-info"></i> Información</a></li>
                 <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_default-3" role="tab"><i class="fas fa-fw fa-lg fa-images"></i> Imagenes</a></li>
-                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_default-4" role="tab"><i class="fas fa-fw fa-lg fa-map-marked-alt"></i> Ubicación</a></li>
+                <li class="nav-item"><a class="nav-link map-view" data-toggle="tab" href="#tab_default-4" role="tab"><i class="fas fa-fw fa-lg fa-map-marked-alt"></i> Ubicación</a></li>
                 <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab_default-5" role="tab"><i class="fas fa-fw fa-lg fa-video"></i> Video</a></li>
             </ul>
             <div class="tab-content">
@@ -416,9 +423,24 @@
                 <div class="tab-pane fade" id="tab_default-4" role="tabpanel">
                     <div class="row">
                         <div class="col-md-12">
+                            <div class="address-container">
+                                <input
+                                    type="text"
+                                    id="address-search"
+                                    class="form-control"
+                                    style="width:300px;"
+                                    placeholder="Buscar dirección...">
+                                <button
+                                    type="button"
+                                    class="btn btn-info"
+                                    onclick="App.mapManager.searchAddress()">
+                                    Buscar
+                                </button>
+                            </div>
+                            <div id="map"></div>
                             <!-- <input id="inputSearch" class="controls" name="inputSearch" type="text" placeholder="Fijar coordenadas">
                             <div id="map"></div> -->
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <div class="contenedor-imagen-personalizado">
                                     <img src="<?php echo ( $this->hash_ubicacion_mapa != '' ) ? 'productos/imagen/'.$this->hash_ubicacion_mapa.'?t='.time() : 'plantillas/imagenes/google-location.png'; ?>" width="350" class="imagen" alt="">
                                     <div class="panel-tag panel-tag--alert-danger mb-5 mt-5">Imagen recomendada de 843 px de ancho y 733 px de alto</div>
@@ -426,7 +448,7 @@
                                     <input type="file" data-width="843" data-height="733" onchange="cambiarImagenDimension(this, event);" class="hidden" name="hash_ubicacion_mapa" accept=".jpg,.jpeg,.png" style="display: none;">
                                     <div class="hidden mensaje">La imagen que intenta subir, no cumple con las dimensiones recomendadas. Intente otra vez.</div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -458,7 +480,28 @@
     </div>
 </form>
 
+<script src="js/map.js?t=<?php echo time(); ?>"></script>
+
 <script>
+    App.mapManager.init('map', 'address-search', {
+        lat: '<?php echo $this->latitud; ?>',
+        lng: '<?php echo $this->longitud; ?>',
+        address: '<?php echo $this->ubicacion; ?>'
+    });
+
+    function onClickTabSectionMap() {
+        document.querySelector(".map-view").addEventListener("click", () => {
+            setTimeout(function () {
+                App.mapManager.invalidateSize();
+            }, 500);
+        })
+    }
+
+    document.getElementById('address-search').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            App.mapManager.searchAddress();
+        }
+    });
 
     $("input[name='sala_venta']").click(function(){
         if($(this).is(":checked")){
@@ -708,97 +751,8 @@
         else inputTipoCambioReferencial.parent().parent().removeClass("disabled")
     });
 
-    function myMap() {
-
-		var marker = null;
-		var inputLatitud = document.getElementById("latitud");
-		var inputLongitud = document.getElementById("longitud");
-		var inputMap = document.getElementById('map');
-		var icon = {
-            url: 'https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png',//place.icon,
-            size: new google.maps.Size(71, 71),
-            origin: new google.maps.Point(0, 0),
-            anchor: new google.maps.Point(17, 34),
-            scaledSize: new google.maps.Size(25, 25)
-		};
-		var myLatlng = new google.maps.LatLng(-12.1187024,-77.0353773);
-		var map = new google.maps.Map(inputMap, {
-			center: myLatlng,
-			zoom: 15,
-			mapTypeId: 'roadmap'
-		});
-
-		marker = new google.maps.Marker({
-			map: map,
-			draggable: true,
-			animation: google.maps.Animation.DROP,
-			position: myLatlng,
-			icon: icon
-		});
-
-		google.maps.event.addListener(marker , 'dragend', function(evt){
-			console.log(evt.latLng.lat());
-			inputLatitud.value = evt.latLng.lat();
-			inputLongitud.value = evt.latLng.lng();
-		});
-
-		var input = document.getElementById('inputSearch');
-
-		var options = {
-			//types: ['(cities)'],
-			componentRestrictions: {country: 'pe'}
-		};
-
-		autocomplete = new google.maps.places.Autocomplete(input, options);
-		map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-
-		autocomplete.addListener('place_changed', function() {
-
-			marker.setMap(null);
-
-			var place = autocomplete.getPlace();
-
-			if (place.length == 0 || place.geometry==undefined) {
-				inputLatitud.value = 0;
-				inputLongitud.value = 0;
-				return;
-			}else{
-				inputLatitud.value = place.geometry.location.lat();
-				inputLongitud.value = place.geometry.location.lng();
-			}
-
-			if (!place.geometry) {
-				window.alert("No hay detalles disponibles para la entrada: '" + place.name + "'");
-				return;
-			}
-
-			marker = new google.maps.Marker({
-				map: map,
-				draggable: true,
-				animation: google.maps.Animation.DROP,
-				position: place.geometry.location,
-				icon: icon
-			});
-
-			google.maps.event.addListener(marker , 'dragend', function(evt){
-				inputLatitud.value = evt.latLng.lat();
-				inputLongitud.value = evt.latLng.lng();
-			});
-
-
-			if (place.geometry.viewport) {
-				map.fitBounds(place.geometry.viewport);
-			} else {
-				map.setCenter(place.geometry.location);
-				map.setZoom(17);
-			}
-
-		});
-
-	}
-
-	$(document).ready(function(){
-		myMap();
+    $(document).ready(function(){
+        onClickTabSectionMap();
 	});
 
 </script>

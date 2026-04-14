@@ -772,7 +772,7 @@ class MantenimientoController extends AbstractActionController {
         foreach($dataDistritos as $item){
             $data_out['data'][] = [
                 $item['nombre'],
-                '<div class="clas btn btn-sm btn-info pop-up" href="/cliente/editar-distritos?iddistritos='.$item['iddistritos'].'"><i class="fas fa-pencil-alt"></i> <span class="hidden-xs">Editar</span></div> <div class="clas btn btn-sm btn-danger pop-up" href="/cliente/eliminar-distritos?iddistritos='.$item['iddistritos'].'"><i class="fas fa-times"></i> <span class="hidden-xs">Eliminar</span></div>'
+                '<div class="clas btn btn-sm btn-info pop-up" href="/mantenimiento/editar-distritos?iddistritos='.$item['iddistritos'].'"><i class="fas fa-pencil-alt"></i> <span class="hidden-xs">Editar</span></div> <div class="clas btn btn-sm btn-danger pop-up" href="/mantenimiento/eliminar-distritos?iddistritos='.$item['iddistritos'].'"><i class="fas fa-times"></i> <span class="hidden-xs">Eliminar</span></div>'
             ];
         }
         return $this->jsonZF($data_out);
