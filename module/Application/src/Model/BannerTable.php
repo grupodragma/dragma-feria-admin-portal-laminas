@@ -77,6 +77,7 @@ class BannerTable {
         if( !empty($condiciones) ) {
             $sql .= " WHERE ".implode(" AND ", $condiciones);
         }
+        $sql .= " GROUP BY idbanner";
         return $adapter->query($sql, $adapter::QUERY_MODE_EXECUTE)->current();
     }
 }
