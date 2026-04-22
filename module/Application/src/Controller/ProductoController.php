@@ -132,6 +132,11 @@ class ProductoController extends AbstractActionController {
                         $carpetaProductoArchivos = getcwd().'/public/productos/imagen';
                         $keyDataArchivo[$key] = ['hash'=> 'hash_super_oferta', 'nombre'=> 'nombre_super_oferta'];
                     break;
+                    case 'hash_portada':
+                        $imagenExtensionesValidas = $this->imagenExtensionesValidas;
+                        $carpetaProductoArchivos = getcwd().'/public/productos/imagen';
+                        $keyDataArchivo[$key] = ['hash'=> 'hash_portada', 'nombre'=> 'nombre_portada'];
+                    break;
                     case 'hash_ubicacion_mapa':
                         $imagenExtensionesValidas = $this->imagenExtensionesValidas;
                         $carpetaProductoArchivos = getcwd().'/public/productos/imagen';
@@ -263,6 +268,11 @@ class ProductoController extends AbstractActionController {
                         $imagenExtensionesValidas = $this->imagenExtensionesValidas;
                         $carpetaProductoArchivos = getcwd().'/public/productos/imagen';
                         $keyDataArchivo[$key] = ['hash'=> 'hash_super_oferta', 'nombre'=> 'nombre_super_oferta'];
+                    break;
+                    case 'hash_portada':
+                        $imagenExtensionesValidas = $this->imagenExtensionesValidas;
+                        $carpetaProductoArchivos = getcwd().'/public/productos/imagen';
+                        $keyDataArchivo[$key] = ['hash'=> 'hash_portada', 'nombre'=> 'nombre_portada'];
                     break;
                     case 'hash_ubicacion_mapa':
                         $imagenExtensionesValidas = $this->imagenExtensionesValidas;
