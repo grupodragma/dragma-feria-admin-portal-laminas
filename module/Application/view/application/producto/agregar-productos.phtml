@@ -165,10 +165,10 @@
                         </div>
                         <div class="form-group">   
                             <div class="contenedor-imagen-personalizado">
-                                <img src="img/no-imagen.jpg" class="imagen" alt="">
-                                <div class="panel-tag panel-tag--alert-danger mb-5 mt-5">Imagen recomendada de 309 px de ancho y 384 px de alto</div>
+                                <img src="img/no-imagen.jpg" class="imagen" alt="" width="300">
+                                <div class="panel-tag panel-tag--alert-danger mb-5 mt-5">Imagen recomendada de 572 px de ancho y 720 px de alto</div>
                                 <button type="button" class="btn btn-dark btn-block cambiar-imagen-personalizado"><i class="fas fa-upload"></i> Cambiar Imagen</button>
-                                <input type="file" data-width="309" data-height="384" onchange="cambiarImagenDimension(this, event);" class="hidden" name="hash_portada" accept=".jpg,.jpeg,.png" style="display: none;">
+                                <input type="file" data-width="572" data-height="720" onchange="cambiarImagenDimension(this, event);" class="hidden" name="hash_portada" accept=".jpg,.jpeg,.png" style="display: none;">
                                 <div class="hidden mensaje">La imagen que intenta subir, no cumple con las dimensiones recomendadas. Intente otra vez.</div>
                             </div>
                         </div>
@@ -473,7 +473,13 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <div class="contenedor-imagen-personalizado">
-                                    <video autoplay muted loop id="videoPreview" width="220">
+                                    <video
+                                        autoplay
+                                        muted
+                                        loop
+                                        id="videoPreview"
+                                        width="220"
+                                        poster="img/no-video.png">
                                         <source id="videoSource" src="<?php echo ( $this->hash_reel_video != '' ) ? 'productos/video/'.$this->hash_reel_video.'?t='.time() : 'https://dragma3d.com/besco-s.mp4'; ?>" type="video/mp4" />
                                     </video>
                                     <button type="button" class="btn btn-dark btn-block cambiar-imagen-personalizado"><i class="fas fa-upload"></i> Cambiar Video</button>
@@ -516,6 +522,42 @@
             App.mapManager.searchAddress();
         }
     });
+
+    function handleFileSelect(event, element) {
+        const fileInputType = element.parentNode.querySelector('input[type="file"]');
+        const fileInput = event.target;
+        const videoPreview = document.getElementById('videoPreview');
+        const videoSource = document.getElementById('videoSource');
+        const maxFileSize = 2097152; // 2MB
+
+        // Verificar si se seleccionó un archivo
+        if (fileInput.files.length > 0 ) {
+            const selectedFile = fileInput.files[0];
+            console.log(selectedFile);
+
+            // Verificar tamaño del archivo
+            if (selectedFile.size > maxFileSize) {
+                fileInputType.value = '';
+                alert('El archivo excede el tamaño máximo permitido de 2MB.');
+                return;
+            }
+
+            // Verificar si el archivo es de tipo video
+            if (selectedFile.type.startsWith('video/')) {
+                // Crear una URL de objeto para el archivo seleccionado
+                const videoURL = URL.createObjectURL(selectedFile);
+
+                // Asignar la URL del objeto al origen del video
+                videoSource.src = videoURL;
+
+                // Actualizar la previsualización del video
+                videoPreview.load();
+            } else {
+                fileInputType.value = '';
+                alert('Selecciona un archivo de video válido.');
+            }
+        }
+    }
 
     $("input[name='sala_venta']").click(function(){
         if($(this).is(":checked")){
