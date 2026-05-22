@@ -147,6 +147,11 @@ class ProductoController extends AbstractActionController {
                         $carpetaProductoArchivos = getcwd().'/public/productos/video';
                         $keyDataArchivo[$key] = ['hash'=> 'hash_reel_video', 'nombre'=> 'nombre_reel_video'];
                     break;
+                    case 'logo':
+                        $imagenExtensionesValidas = $this->imagenExtensionesValidas;
+                        $carpetaProductoArchivos = getcwd().'/public/productos/imagen';
+                        $keyDataArchivo[$key] = ['hash'=> 'hash_logo', 'nombre'=> 'nombre_logo'];
+                    break;
                     default:
                     break;
                 }
@@ -283,6 +288,11 @@ class ProductoController extends AbstractActionController {
                         $imagenExtensionesValidas = ['mp4'];
                         $carpetaProductoArchivos = getcwd().'/public/productos/video';
                         $keyDataArchivo[$key] = ['hash'=> 'hash_reel_video', 'nombre'=> 'nombre_reel_video'];
+                    break;
+                    case 'logo':
+                        $imagenExtensionesValidas = $this->imagenExtensionesValidas;
+                        $carpetaProductoArchivos = getcwd().'/public/productos/imagen';
+                        $keyDataArchivo[$key] = ['hash'=> 'hash_logo', 'nombre'=> 'nombre_logo'];
                     break;
                     default:
                     break;
